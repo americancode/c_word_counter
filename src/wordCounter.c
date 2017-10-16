@@ -62,7 +62,7 @@ static void printList (Node *head){
  *   This function accepts a pointer to a node and recursively prints the nodes
  *   their counts to a file
  *
- *	 outpu: a pointer to a file
+ *	 output: a pointer to a file
  *   head: a pointer to a node
  */
 static void printListFile (Node *head, FILE *output){
