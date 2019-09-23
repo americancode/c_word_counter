@@ -15,7 +15,8 @@
 #include <ctype.h>
 #include <getopt.h>
 
-typedef struct node {
+typedef struct node
+{
 	int count;
 	char *word;
 	struct node *next;
@@ -30,13 +31,14 @@ typedef struct node {
  *
  *   returns: a pointer to the created node
  */
-Node *makeNode ( Node *head, char *word ) {
+Node *makeNode(Node *head, char *word)
+{
 	Node *current = NULL;
 	current = malloc(sizeof(Node));
 	current->word = malloc(strlen(word) + 1);
 	strcpy(current->word, word);
 	current->next = NULL;
-	current->count = 0; // initialize the count to be null
+	current->count = 1; // initialize the count to be
 	head->next = current;
 	return current;
 }
@@ -47,15 +49,18 @@ Node *makeNode ( Node *head, char *word ) {
  *
  *   head: a pointer to a node
  */
-static void printList (Node *head){
-	if (head != NULL){
-		printf ( "%-10s   %d\n", head->word,  head->count);
+static void printList(Node *head)
+{
+	if (head != NULL)
+	{
+		printf("%-10s   %d\n", head->word, head->count);
 		head = head->next;
 		printList(head);
-	}else {
+	}
+	else
+	{
 		printf("List has ended\n");
 	}
-
 }
 
 /*
@@ -65,15 +70,18 @@ static void printList (Node *head){
  *	 output: a pointer to a file
  *   head: a pointer to a node
  */
-static void printListFile (Node *head, FILE *output){
-	if (head != NULL){
-		fprintf (output, "%-10s   %d\n", head->word,  head->count);
+static void printListFile(Node *head, FILE *output)
+{
+	if (head != NULL)
+	{
+		fprintf(output, "%-10s   %d\n", head->word, head->count);
 		head = head->next;
 		printListFile(head, output);
-	}else {
+	}
+	else
+	{
 		fprintf(output, "List has ended\n");
 	}
-
 }
 
 /*
@@ -86,22 +94,30 @@ static void printListFile (Node *head, FILE *output){
  *
  *   returns: a pointer to the found or created node
  */
-Node *findNodeForWord(Node *head, char *word){
-	if (head->next == NULL){
+Node *findNodeForWord(Node *head, char *word)
+{
+	if (head->next == NULL)
+	{
 		Node *insertNode = makeNode(head, word); //insert after the head
 		return insertNode;
-	}else if (strcmp(head->next->word, word) == 0){//stuff in the list
+	}
+	else if (strcmp(head->next->word, word) == 0)
+	{ //stuff in the list
+		head->next->count++;
 		return head->next;
-	}else if (strcmp(head->next->word, word) < 0){ // list word is less than given word
+	}
+	else if (strcmp(head->next->word, word) < 0)
+	{ // list word is less than given word
 		head = head->next;
 		findNodeForWord(head, word);
-	}else if (strcmp(head->next->word, word) > 0){
+	}
+	else if (strcmp(head->next->word, word) > 0)
+	{
 		Node *linkNode = head->next;
 		Node *insertedNode = makeNode(head, word);
 		insertedNode->next = linkNode;
 		return insertedNode;
 	}
-
 }
 
 /*
@@ -110,13 +126,13 @@ Node *findNodeForWord(Node *head, char *word){
  *   head: a pointer to a Node
  *   word: a pointer to a string
  */
-static void addWord(Node *head, char *word){
+static void addWord(Node *head, char *word)
+{
 	Node *nodeForWord = findNodeForWord(head, word);
-	nodeForWord->count++;
 }
 
 
-int main ( int argc, char **argv) {
+int main ( int argc, char *argv[]) {
 	char c;
 	int i, j = 0;
 	char buffer[100];
