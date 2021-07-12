@@ -118,6 +118,7 @@ Node *findNodeForWord(Node *head, char *word)
 		insertedNode->next = linkNode;
 		return insertedNode;
 	}
+	return NULL;
 }
 
 /*
